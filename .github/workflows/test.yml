@@ -1,0 +1,44 @@
+name: Test
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.3'
+      - run: go vet ./...
+      - run: go test -race -cover ./...
+      - run: go test ./internal/guard -run '^$' -fuzz FuzzSubscription -fuzztime 10s -parallel 2
+      - run: for script in packaging/*.sh packaging/openwrt.init scripts/*.sh; do sh -n "$script"; done
+      - run: sh scripts/release.sh ci
+      - run: sh scripts/test-package.sh dist/xray-route-guard-ci-linux-amd64
+  real-core:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - version: v25.1.1
+            sha256: c80979e097aa304fab7d749bc371e8329f453a4c6a8c5d8f71dc12ab0e653fb3
+          - version: v26.10.31
+            sha256: e4bd9119f50ae7c41658b1abd0679ae06f98bd864a2907ff33f2f2cf7081b214
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.3'
+      - name: Fetch checksum-pinned official Xray
+        env:
+          XRAY_VERSION: ${{ matrix.version }}
+          XRAY_SHA256: ${{ matrix.sha256 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/xray"
+          curl --fail --location --retry 3 "https://github.com/XTLS/Xray-core/releases/download/$XRAY_VERSION/Xray-linux-64.zip" -o "$RUNNER_TEMP/xray.zip"
+          printf '%s  %s\n' "$XRAY_SHA256" "$RUNNER_TEMP/xray.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/xray.zip" -d "$RUNNER_TEMP/xray"
+          chmod +x "$RUNNER_TEMP/xray/xray"
+      - name: Probe and validate supported VLESS transports
+        run: XRAY_BINARY="$RUNNER_TEMP/xray/xray" go test ./internal/guard -run RealXray -v

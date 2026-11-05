@@ -1,0 +1,21 @@
+{
+  "active_config": "/etc/xray/config.json",
+  "xray": "/usr/bin/xray",
+  "outbound_tag": "proxy",
+  "active_socks": "127.0.0.1:1080",
+  "probe_port": 18082,
+  "restart": ["/etc/init.d/xray", "restart"],
+  "subscription_file": "/etc/xray-route-guard/subscription.url",
+  "state_dir": "/etc/xray-route-guard/state",
+  "runtime_dir": "/tmp/xray-route-guard",
+  "include": "",
+  "interval_seconds": 30,
+  "failure_threshold": 3,
+  "cooldown_seconds": 120,
+  "refresh_seconds": 21600,
+  "timeout_seconds": 8,
+  "targets": [
+    {"url": "https://www.google.com/generate_204", "status": 204},
+    {"url": "https://www.youtube.com/", "status": 200}
+  ]
+}

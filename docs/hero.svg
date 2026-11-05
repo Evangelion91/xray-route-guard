@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 300" role="img" aria-labelledby="title desc">
+  <title id="title">Xray Route Guard</title>
+  <desc id="desc">Safe failover for an existing Xray service. Check the route, verify a candidate, switch or recover.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101a35"/><stop offset="1" stop-color="#201638"/></linearGradient>
+    <linearGradient id="accent"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#52e3c2"/></linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 1 L6 4 L0 7" fill="none" stroke="#697995" stroke-width="1.4"/></marker>
+  </defs>
+  <rect width="920" height="300" rx="22" fill="url(#bg)"/>
+  <path d="M54 46 L79 36 L104 46 V68 Q103 94 79 104 Q55 94 54 68Z" fill="none" stroke="url(#accent)" stroke-width="3"/>
+  <path d="M67 68 L77 78 L93 57" fill="none" stroke="#52e3c2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="126" y="67" font-size="34" font-weight="700" fill="#f0f4ff">Xray Route Guard</text>
+    <text x="127" y="98" font-size="16" fill="#b4bfd6">Safe failover for an existing Xray service</text>
+    <text x="850" y="56" font-size="11" text-anchor="end" letter-spacing="2" fill="#a78bfa">OPEN SOURCE</text>
+    <g fill="#17233d" stroke="#34435f">
+      <rect x="54" y="148" width="230" height="88" rx="12"/>
+      <rect x="345" y="148" width="230" height="88" rx="12"/>
+      <rect x="636" y="148" width="230" height="88" rx="12"/>
+    </g>
+    <path d="M296 192 H331" stroke="#697995" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M587 192 H622" stroke="#697995" stroke-width="2" marker-end="url(#arrow)"/>
+    <g fill="#a78bfa" font-size="11" font-weight="700" letter-spacing="1.6">
+      <text x="74" y="173">01 / OBSERVE</text><text x="365" y="173">02 / VERIFY</text><text x="656" y="173">03 / COMMIT</text>
+    </g>
+    <g fill="#f0f4ff" font-size="20" font-weight="700">
+      <text x="74" y="201">Confirm failure</text><text x="365" y="201">Probe in isolation</text><text x="656" y="201">Switch or recover</text>
+    </g>
+    <g fill="#a9b7d0" font-size="12">
+      <text x="74" y="220">Multiple targets · failure threshold</text><text x="365" y="220">Two successful checks · cooldown</text><text x="656" y="220">Validate · journal · post-check</text>
+    </g>
+    <text x="460" y="271" text-anchor="middle" font-size="12" fill="#8e9db9">One managed outbound. Your routing stays yours.</text>
+  </g>
+</svg>
